@@ -8,6 +8,7 @@ from Optim import CosineWithRestarts
 from Batch import create_masks
 import dill as pickle
 
+
 def train_model(model, opt):
     
     print("training model...")
@@ -65,10 +66,10 @@ def train_model(model, opt):
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-src_data', required=True)
-    parser.add_argument('-trg_data', required=True)
-    parser.add_argument('-src_lang', required=True)
-    parser.add_argument('-trg_lang', required=True)
+    parser.add_argument('-src_data', type=str, default='data/english.txt')
+    parser.add_argument('-trg_data', type=str, default='data/french.txt')
+    parser.add_argument('-src_lang', type=str, default='en')
+    parser.add_argument('-trg_lang', type=str, default='fr')
     parser.add_argument('-no_cuda', action='store_true')
     parser.add_argument('-SGDR', action='store_true')
     parser.add_argument('-epochs', type=int, default=2)
