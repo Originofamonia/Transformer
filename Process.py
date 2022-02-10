@@ -1,6 +1,6 @@
 import pandas as pd
 # import torchtext
-from torchtext.legacy import data
+from torchtext.legacy.data import Field, TabularDataset
 from Tokenize import tokenize
 from Batch import MyIterator, batch_size_fn
 import os
@@ -36,8 +36,8 @@ def create_fields(opt):
     t_src = tokenize(opt.src_lang)
     t_trg = tokenize(opt.trg_lang)
 
-    TRG = data.Field(lower=True, tokenize=t_trg.tokenizer, init_token='<sos>', eos_token='<eos>')
-    SRC = data.Field(lower=True, tokenize=t_src.tokenizer)
+    TRG = Field(lower=True, tokenize=t_trg.tokenizer, init_token='<sos>', eos_token='<eos>')
+    SRC = Field(lower=True, tokenize=t_src.tokenizer)
 
     if opt.load_weights is not None:
         try:
@@ -63,7 +63,7 @@ def create_dataset(opt, SRC, TRG):
     df.to_csv("translate_transformer_temp.csv", index=False)
     
     data_fields = [('src', SRC), ('trg', TRG)]
-    train = data.TabularDataset('./translate_transformer_temp.csv', format='csv', fields=data_fields)
+    train = TabularDataset('./translate_transformer_temp.csv', format='csv', fields=data_fields)
 
     train_iter = MyIterator(train, batch_size=opt.batchsize, device=opt.device,
                         repeat=False, sort_key=lambda x: (len(x.src), len(x.trg)),
