@@ -70,8 +70,8 @@ def main():
     parser.add_argument('-trg_data', type=str, default='data/french.txt')
     parser.add_argument('-src_lang', type=str, default='en')
     parser.add_argument('-trg_lang', type=str, default='fr')
-    parser.add_argument('-no_cuda', action='store_true')
-    parser.add_argument('-SGDR', action='store_true')
+    parser.add_argument('-cuda', type=bool, default=True)
+    parser.add_argument('-SGDR', type=bool, default=True)
     parser.add_argument('-epochs', type=int, default=2)
     parser.add_argument('-d_model', type=int, default=512)
     parser.add_argument('-n_layers', type=int, default=6)
@@ -88,7 +88,7 @@ def main():
 
     opt = parser.parse_args()
     
-    opt.device = 0 if opt.no_cuda is False else -1
+    opt.device = 0 if opt.cuda is True else -1
     if opt.device == 0:
         assert torch.cuda.is_available()
     
@@ -98,7 +98,7 @@ def main():
     model = get_model(opt, len(SRC.vocab), len(TRG.vocab))
 
     opt.optimizer = torch.optim.Adam(model.parameters(), lr=opt.lr, betas=(0.9, 0.98), eps=1e-9)
-    if opt.SGDR == True:
+    if opt.SGDR:
         opt.sched = CosineWithRestarts(opt.optimizer, T_max=opt.train_len)
 
     if opt.checkpoint > 0:
