@@ -69,7 +69,7 @@ def main():
     parser.add_argument('-trg_data', type=str, default='data/french.txt')
     parser.add_argument('-src_lang', type=str, default='en')
     parser.add_argument('-trg_lang', type=str, default='fr')
-    parser.add_argument('-cuda', type=bool, default=True)
+    parser.add_argument('-device', type=int, default=1, help='cuda device id')
     parser.add_argument('-SGDR', type=bool, default=True)
     parser.add_argument('-epochs', type=int, default=2)
     parser.add_argument('-d_model', type=int, default=512)
@@ -87,9 +87,9 @@ def main():
 
     opt = parser.parse_args()
     
-    opt.device = 0 if opt.cuda is True else -1
-    if opt.device == 0:
-        assert torch.cuda.is_available()
+    # opt.device = 1 if opt.cuda is True else -1
+    # if opt.device == 0:
+    #     assert torch.cuda.is_available()
     
     read_data(opt)
     SRC, TRG = create_fields(opt)
