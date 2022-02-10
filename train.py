@@ -28,9 +28,8 @@ def train_model(model, opt):
             torch.save(model.state_dict(), 'weights/model_weights')
                     
         for i, batch in enumerate(opt.train): 
-            batch = tuple(t.cuda(opt.device) for t in batch)
-            src = batch.src.transpose(0,1)
-            trg = batch.trg.transpose(0,1)
+            src = batch.src.transpose(0,1).cuda(opt.device)
+            trg = batch.trg.transpose(0,1).cuda(opt.device)
             trg_input = trg[:, :-1]
             src_mask, trg_mask = create_masks(src, trg_input, opt)
             preds = model(src, trg_input, src_mask, trg_mask)
