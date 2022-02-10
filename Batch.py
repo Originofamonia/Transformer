@@ -1,6 +1,6 @@
 import torch
-from torchtext import data
-from torchtext.legacy.data import Iterator
+# from torchtext import data
+from torchtext.legacy.data import Iterator, batch
 import numpy as np
 from torch.autograd import Variable
 
@@ -36,8 +36,8 @@ class MyIterator(Iterator):
     def create_batches(self):
         if self.train:
             def pool(d, random_shuffler):
-                for p in data.batch(d, self.batch_size * 100):
-                    p_batch = data.batch(
+                for p in batch(d, self.batch_size * 100):
+                    p_batch = batch(
                         sorted(p, key=self.sort_key),
                         self.batch_size, self.batch_size_fn)
                     for b in random_shuffler(list(p_batch)):
@@ -46,7 +46,7 @@ class MyIterator(Iterator):
             
         else:
             self.batches = []
-            for b in data.batch(self.data(), self.batch_size,
+            for b in batch(self.data(), self.batch_size,
                                           self.batch_size_fn):
                 self.batches.append(sorted(b, key=self.sort_key))
 
