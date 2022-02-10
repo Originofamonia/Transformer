@@ -4,7 +4,8 @@ from torchtext import data
 from Tokenize import tokenize
 from Batch import MyIterator, batch_size_fn
 import os
-import dill as pickle
+import pickle
+
 
 def read_data(opt):
     
