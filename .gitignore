@@ -8,3 +8,6 @@ __pycache__/Sublayers.cpython-38.pyc
 __pycache__/Batch.cpython-38.pyc
 __pycache__/Tokenize.cpython-38.pyc
 __pycache__/Optim.cpython-38.pyc
+y/SRC.pkl
+y/model_weights
+y/TRG.pkl
