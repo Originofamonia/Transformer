@@ -7,7 +7,7 @@ class tokenize(object):
         if 'en' in lang:
             self.nlp = spacy.load(f'{lang}_core_web_sm')
         else:
-            self.nlp = spacy.load(lang)
+            self.nlp = spacy.load(f'{lang}_core_news_sm')
             
     def tokenizer(self, sentence):
         sentence = re.sub(
